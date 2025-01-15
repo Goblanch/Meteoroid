@@ -1,17 +1,26 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("INPUT")]
     [SerializeField] private InputListener input;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintSpeed = 10f;
 
+    [Header("Shooting")]
+    public GameObject bulletPrefab;
+    public Transform shootOrigin;
+    public float shootCoolDown = 0.2f;
+
     private Rigidbody2D _rb2d;
     private Vector2 _input;
     private Vector2 _velocity;
-    [SerializeField] private float _currentSpeed;
+    private float _currentSpeed;
+    private bool _canShoot = true;
+    private bool _onCoolDown;
 
     private void OnEnable()
     {
@@ -74,7 +83,16 @@ public class PlayerController : MonoBehaviour
 
     public void HandleShoot()
     {
+        if(_canShoot) Instantiate(bulletPrefab, shootOrigin.position, Quaternion.identity);
+        if(!_onCoolDown) StartCoroutine(ShootCoolDown());
+    }
 
+    private IEnumerator ShootCoolDown(){
+        _canShoot = false;
+        _onCoolDown = true;
+        yield return new WaitForSeconds(shootCoolDown);
+        _canShoot = true;
+        _onCoolDown = false;
     }
 
     public void HandlePauseGame()
