@@ -5,7 +5,7 @@ public class MovementState : PlayerState
 {
     public override void StateEnter()
     {
-        Debug.Log("MOVEMENT");
+
     }
 
     public override void StateExit()

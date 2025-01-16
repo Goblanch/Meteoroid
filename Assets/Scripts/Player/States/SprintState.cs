@@ -4,7 +4,6 @@ public class SprintState : PlayerState
 {
     public override void StateEnter()
     {
-        Debug.Log("SPRINT");
         controller.Motor.StartSprint();
     }
 

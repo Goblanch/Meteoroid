@@ -4,7 +4,7 @@ public class IdleState : PlayerState
 {
     public override void StateEnter()
     {
-        Debug.Log("IDLE");
+        
     }
 
     public override void StateExit()
