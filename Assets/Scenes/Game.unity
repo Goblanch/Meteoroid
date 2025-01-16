@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8864929}
   - component: {fileID: 8864928}
+  - component: {fileID: 8864930}
   - component: {fileID: 8864927}
   m_Layer: 0
   m_Name: Player
@@ -178,7 +179,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: e549a2a3b26abc24ca54bc9f420c2e91, type: 2}
   stateMachine: {fileID: 273302105}
-  playerConfiguration: {fileID: 11400000, guid: bc9b207e295772f4b989034b8bc12602, type: 2}
+  bulletPrefab: {fileID: 6504491625805200567, guid: fa47e53c5ce39224aaa88860d2105b95, type: 3}
+  shootOrigin: {x: 0, y: 0}
+  shootCoolDown: 0.2
 --- !u!4 &8864929
 Transform:
   m_ObjectHideFlags: 0
@@ -197,6 +200,20 @@ Transform:
   - {fileID: 273302104}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8864930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8864926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff986190ded1204ca8cca2e75846622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  sprintSpeed: 10
 --- !u!1 &273302103
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb5403015d9e4d4489ad87801e045fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configuration: {fileID: 11400000, guid: bc9b207e295772f4b989034b8bc12602, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44eb7bbd6cbdced4a8d87e06d1c39b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configuration: {fileID: 11400000, guid: 3a9f00d4efe8b734ba7b06291ec32ae7, type: 2}
 --- !u!1 &1011827299
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +634,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362ad76ef60ac2d4992913c43bef0e31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configuration: {fileID: 11400000, guid: bc9b207e295772f4b989034b8bc12602, type: 2}
 --- !u!4 &1184469982
 Transform:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("State Machine")]
     [field: SerializeField, BoxGroup("State Machine Reference")] private PlayerStateMachine stateMachine;
 
-    [field: SerializeField, BoxGroup("Shooting")] public GameObject bulletPrefab;
+    [field: SerializeField, BoxGroup("Shooting")] public BulletController bulletPrefab;
     [field: SerializeField, BoxGroup("Shooting")] public Vector2 shootOrigin;
     [field: SerializeField, BoxGroup("Shooting")] public float shootCoolDown = 0.2f;
     
@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     private bool _sprint;
     public bool Sprint {get => _sprint;}
+
+    private ObjectPool bulletsPool;
 
     public Rigidbody2D _rb2d {get; private set;}
     private Vector2 _velocity;
@@ -50,6 +52,9 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.ConfigureSMachine(this);
         stateMachine.Initialize();
+
+        bulletsPool = new ObjectPool(bulletPrefab);
+        bulletsPool.Init(40);
     }
 
     // Update is called once per frame
@@ -98,11 +103,13 @@ public class PlayerController : MonoBehaviour
 
     public void HandleShoot()
     {
-        if (_canShoot) Instantiate(
-            bulletPrefab,
-            transform.position + (Vector3)shootOrigin,
-            Quaternion.identity
-        );
+        if (_canShoot) bulletsPool.Spawn<BulletController>(transform.position);
+
+        // Instantiate(
+        //     bulletPrefab,
+        //     transform.position + (Vector3)shootOrigin,
+        //     Quaternion.identity
+        // );
 
         if (!_onCoolDown) StartCoroutine(ShootCoolDown());
     }
