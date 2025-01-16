@@ -85,12 +85,10 @@ public class InputListener : ScriptableObject, PlayerInput.IPlayerActions, Playe
     {
         if(context.phase == InputActionPhase.Performed){
             SprintEvent?.Invoke(true);
-            Debug.Log("PERFORM SPRINT");
         }
 
         if(context.phase == InputActionPhase.Canceled){
             SprintEvent?.Invoke(false);
-            Debug.Log("CANCEL SPRINT");
         }
     }
 

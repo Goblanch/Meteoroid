@@ -1,22 +1,29 @@
 using System.Collections;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("INPUT")]
-    [SerializeField] private InputListener input;
+    [field: SerializeField, BoxGroup("Input")] private InputListener input;
 
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float sprintSpeed = 10f;
+    [Header("State Machine")]
+    [field: SerializeField, BoxGroup("State Machine Reference")] private PlayerStateMachine stateMachine;
 
-    [Header("Shooting")]
-    public GameObject bulletPrefab;
-    public Transform shootOrigin;
-    public float shootCoolDown = 0.2f;
+    [field: SerializeField, BoxGroup("Shooting")] public GameObject bulletPrefab;
+    [field: SerializeField, BoxGroup("Shooting")] public Vector2 shootOrigin;
+    [field: SerializeField, BoxGroup("Shooting")] public float shootCoolDown = 0.2f;
+    
+    private PlayerMotor _motor;
+    public PlayerMotor Motor {get => _motor;}
 
-    private Rigidbody2D _rb2d;
     private Vector2 _input;
+    public Vector2 PInput {get => _input;}
+
+    private bool _sprint;
+    public bool Sprint {get => _sprint;}
+
+    public Rigidbody2D _rb2d {get; private set;}
     private Vector2 _velocity;
     private float _currentSpeed;
     private bool _canShoot = true;
@@ -35,18 +42,30 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _motor = GetComponent<PlayerMotor>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _currentSpeed = moveSpeed;
+        stateMachine.ConfigureSMachine(this);
+        stateMachine.Initialize();
     }
 
     // Update is called once per frame
     void Update()
     {
+        stateMachine.Step();
+    }
 
+    private void FixedUpdate()
+    {
+        stateMachine.PhysicsStep();
+    }
+
+    private void LateUpdate()
+    {
+        stateMachine.LateStep();
     }
 
     private void SubscribeToInput()
@@ -70,24 +89,26 @@ public class PlayerController : MonoBehaviour
     public void HandleMovement(Vector2 input)
     {
         _input = input;
-        _velocity = input.normalized * _currentSpeed;
-        _rb2d.linearVelocity = _velocity;
     }
 
     public void HandleSprint(bool sprint)
     {
-        _currentSpeed = moveSpeed;
-        if (sprint) _currentSpeed = sprintSpeed;
-        HandleMovement(_input);
+        _sprint = !_sprint;
     }
 
     public void HandleShoot()
     {
-        if(_canShoot) Instantiate(bulletPrefab, shootOrigin.position, Quaternion.identity);
-        if(!_onCoolDown) StartCoroutine(ShootCoolDown());
+        if (_canShoot) Instantiate(
+            bulletPrefab,
+            transform.position + (Vector3)shootOrigin,
+            Quaternion.identity
+        );
+
+        if (!_onCoolDown) StartCoroutine(ShootCoolDown());
     }
 
-    private IEnumerator ShootCoolDown(){
+    private IEnumerator ShootCoolDown()
+    {
         _canShoot = false;
         _onCoolDown = true;
         yield return new WaitForSeconds(shootCoolDown);
