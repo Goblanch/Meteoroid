@@ -4,12 +4,12 @@ public class SprintState : PlayerState
 {
     public override void StateEnter()
     {
-        controller.Motor.StartSprint();
+        //controller.Motor.StartSprint();
     }
 
     public override void StateExit()
     {
-        controller.Motor.EndSprint();
+        //controller.Motor.EndSprint();
     }
 
     public override void StateInputs()
@@ -29,7 +29,7 @@ public class SprintState : PlayerState
 
     public override void StateStep()
     {
-        controller.Motor.Move(controller.PInput);
+        //controller.Motor.Move(controller.PInput);
         
     }
 }

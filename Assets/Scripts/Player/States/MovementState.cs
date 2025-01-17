@@ -16,7 +16,7 @@ public class MovementState : PlayerState
     public override void StateInputs()
     {
         if(controller.Sprint) stateMachine.SetState(typeof(SprintState));
-        if(controller.Motor.Velocity.magnitude == 0) stateMachine.SetState(typeof(IdleState));
+        //if(controller.Motor.Velocity.magnitude == 0) stateMachine.SetState(typeof(IdleState));
     }
 
     public override void StateLateStep()
@@ -31,6 +31,6 @@ public class MovementState : PlayerState
 
     public override void StateStep()
     {
-        controller.Motor.Move(controller.PInput);
+        //controller.Motor.Move(controller.PInput);
     }
 }

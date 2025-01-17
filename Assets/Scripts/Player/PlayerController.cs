@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, BoxGroup("Shooting")] public Vector2 shootOrigin;
     [field: SerializeField, BoxGroup("Shooting")] public float shootCoolDown = 0.2f;
     
-    private PlayerMotor _motor;
-    public PlayerMotor Motor {get => _motor;}
+    //private PlayerMotor _motor;
+    //public PlayerMotor Motor {get => _motor;}
+
+    private ShipMotor _motor;
 
     private Vector2 _input;
     public Vector2 PInput {get => _input;}
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private float _currentSpeed;
     private bool _canShoot = true;
     private bool _onCoolDown;
+    private bool _break;
 
     private void OnEnable()
     {
@@ -44,7 +48,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
-        _motor = GetComponent<PlayerMotor>();
+        //_motor = GetComponent<PlayerMotor>();
+        _motor = GetComponent<ShipMotor>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -77,6 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         input.MoveEvent += HandleMovement;
         input.SprintEvent += HandleSprint;
+        input.BreakEvent += HandleBreak;
         input.ShootEvent += HandleShoot;
         input.PauseEvent += HandlePauseGame;
         input.ResumeEvent += HandleResumeGame;
@@ -86,6 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         input.MoveEvent -= HandleMovement;
         input.SprintEvent -= HandleSprint;
+        input.BreakEvent -= HandleBreak;
         input.ShootEvent -= HandleShoot;
         input.PauseEvent -= HandlePauseGame;
         input.ResumeEvent -= HandleResumeGame;
@@ -94,11 +101,22 @@ public class PlayerController : MonoBehaviour
     public void HandleMovement(Vector2 input)
     {
         _input = input;
+        _motor.SetInput(_input.y, 0, _input.x);
     }
 
     public void HandleSprint(bool sprint)
     {
         _sprint = !_sprint;
+    }
+
+    public void HandleBreak(){
+        _break = !_break;
+
+        if(_break){
+            _motor.SetInput(_input.y, 1, _input.x);
+        }else{
+            _motor.SetInput(_input.y, 0, _input.x);
+        }
     }
 
     public void HandleShoot()

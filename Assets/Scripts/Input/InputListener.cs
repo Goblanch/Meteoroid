@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 [CreateAssetMenu(fileName = "InputListener", menuName = "Scriptable Objects/InputListener")]
 public class InputListener : ScriptableObject, PlayerInput.IPlayerActions, PlayerInput.IUIActions
@@ -12,6 +13,7 @@ public class InputListener : ScriptableObject, PlayerInput.IPlayerActions, Playe
 
     public Action<Vector2> MoveEvent;
     public Action<bool> SprintEvent;
+    public Action BreakEvent;
     public Action ShootEvent;
     public Action PauseEvent;
     public Action ResumeEvent;
@@ -91,6 +93,19 @@ public class InputListener : ScriptableObject, PlayerInput.IPlayerActions, Playe
             SprintEvent?.Invoke(false);
         }
     }
+
+    public void OnBreak(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed){
+            BreakEvent?.Invoke();
+        }
+
+        if(context.phase == InputActionPhase.Canceled){
+            BreakEvent?.Invoke();
+        }
+    }
+
+
 
     #endregion
 }
