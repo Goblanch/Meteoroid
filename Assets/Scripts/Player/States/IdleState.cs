@@ -14,7 +14,7 @@ public class IdleState : PlayerState
 
     public override void StateInputs()
     {
-        if(controller.PInput.magnitude != 0) stateMachine.SetState(typeof(MovementState));
+        if(controller.Motor.Velocity != Vector2.zero) stateMachine.SetState(typeof(MovementState));
     }
 
     public override void StateLateStep()

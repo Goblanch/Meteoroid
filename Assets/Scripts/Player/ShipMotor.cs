@@ -7,14 +7,18 @@ using System;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ShipMotor : MonoBehaviour
 {
-    [field: SerializeField, BoxGroup("Car Settings")] private float maxSpeed = 50f;
-    [field: SerializeField, BoxGroup("Car Settings")] private float accelerationFactor = 30f;
-    [field: SerializeField, BoxGroup("Car Settings")] private float turnFactor = 50f;
-    [field: SerializeField, BoxGroup("Car Settings"), Range(0, 1)] private float minSpeedFactor = .05f;
-    [field: SerializeField, BoxGroup("Car Settings")] private float limitDrag = 2f;
-    [field: SerializeField, BoxGroup("Car Settings")] private float driftFactor = .9f;
+    [field: SerializeField, BoxGroup("Ship Settings")] private float maxSpeed = 50f;
+    [field: SerializeField, BoxGroup("Ship Settings")] private float turboMultiplier = 2f;
+    [field: SerializeField, BoxGroup("Ship Settings")] private float accelerationFactor = 30f;
+    [field: SerializeField, BoxGroup("Ship Settings")] private float turnFactor = 50f;
+    [field: SerializeField, BoxGroup("Ship Settings"), Range(0, 1)] private float minSpeedFactor = .05f;
+    [field: SerializeField, BoxGroup("Ship Settings")] private float limitDrag = 2f;
+    [field: SerializeField, BoxGroup("Ship Settings")] private float driftFactor = .9f;
 
     private Rigidbody2D _rb2d;
+    public Vector2 Velocity {get => _rb2d.linearVelocity;}
+    private float _currentMaxSpeed;
+    private float _currentMaxSpeedBackUp;
     private float _accelerationInput;
     private float _steeringInput;
     private float _breakInput;
@@ -22,8 +26,30 @@ public class ShipMotor : MonoBehaviour
     private float _totalAcceleration;
     private float _velocityForward;
 
+    #region SETTERS
+
+    public void SetMaxSpeed(float maxSpeed) => this.maxSpeed = maxSpeed;
+    public void SetAccelerationFactor(float accelerationFactor) => this.accelerationFactor = accelerationFactor;
+    public void SetTurnFactor(float turnFactor) => this.turnFactor = turnFactor;
+    public void SetLimitDrag(float limitDrag) => this.limitDrag = limitDrag;
+    public void SetDriftFactor(float driftFactor) => this.driftFactor = driftFactor;
+    public void SetInput(float accelerationInput, float breakInput, float steeringInput){
+        _accelerationInput = accelerationInput;
+        _breakInput = breakInput;
+        _steeringInput = steeringInput;
+
+        _totalAcceleration = _accelerationInput - _breakInput;
+    }
+
+    #endregion
+
     private void Awake() {
         _rb2d = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start() {
+        _currentMaxSpeed = maxSpeed;
+        _currentMaxSpeedBackUp = _currentMaxSpeed;
     }
 
     private void FixedUpdate() {
@@ -65,11 +91,9 @@ public class ShipMotor : MonoBehaviour
         _rb2d.linearVelocity = fixedVelocity;
     }
 
-    public void SetInput(float accelerationInput, float breakInput, float steeringInput){
-        _accelerationInput = accelerationInput;
-        _breakInput = breakInput;
-        _steeringInput = steeringInput;
-
-        _totalAcceleration = _accelerationInput - _breakInput;
+    public void SetTurboMode(bool enabled){
+        if(enabled) maxSpeed = _currentMaxSpeed * turboMultiplier;
+        if(!enabled) maxSpeed = _currentMaxSpeedBackUp;
     }
+   
 }

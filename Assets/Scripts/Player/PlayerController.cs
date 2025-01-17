@@ -15,10 +15,8 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, BoxGroup("Shooting")] public Vector2 shootOrigin;
     [field: SerializeField, BoxGroup("Shooting")] public float shootCoolDown = 0.2f;
     
-    //private PlayerMotor _motor;
-    //public PlayerMotor Motor {get => _motor;}
-
     private ShipMotor _motor;
+    public ShipMotor Motor {get => _motor;}
 
     private Vector2 _input;
     public Vector2 PInput {get => _input;}
@@ -48,7 +46,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
-        //_motor = GetComponent<PlayerMotor>();
         _motor = GetComponent<ShipMotor>();
     }
 
@@ -107,6 +104,7 @@ public class PlayerController : MonoBehaviour
     public void HandleSprint(bool sprint)
     {
         _sprint = !_sprint;
+        _motor.SetTurboMode(_sprint);
     }
 
     public void HandleBreak(){
