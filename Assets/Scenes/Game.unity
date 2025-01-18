@@ -212,12 +212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07522c6d46706d549b014193e0d9d95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
-  accelerationFactor: 5
-  turnFactor: 10
+  maxSpeed: 5
+  turboMultiplier: 2
+  accelerationFactor: 2
+  turnFactor: 3
   minSpeedFactor: 0.05
-  limitDrag: 2
-  driftFactor: 0.9
+  limitDrag: 3.5
+  driftFactor: 1
 --- !u!1 &273302103
 GameObject:
   m_ObjectHideFlags: 0

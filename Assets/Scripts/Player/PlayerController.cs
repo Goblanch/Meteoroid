@@ -11,10 +11,8 @@ public class PlayerController : MonoBehaviour
     [Header("State Machine")]
     [field: SerializeField, BoxGroup("State Machine Reference")] private PlayerStateMachine stateMachine;
 
-    [field: SerializeField, BoxGroup("Shooting")] public BulletController bulletPrefab;
-    [field: SerializeField, BoxGroup("Shooting")] public Vector2 shootOrigin;
-    [field: SerializeField, BoxGroup("Shooting")] public float shootCoolDown = 0.2f;
-    
+    private ShipShootingSystem _shootSys;
+
     private ShipMotor _motor;
     public ShipMotor Motor {get => _motor;}
 
@@ -23,14 +21,10 @@ public class PlayerController : MonoBehaviour
 
     private bool _sprint;
     public bool Sprint {get => _sprint;}
-
-    private ObjectPool bulletsPool;
-
+    
     public Rigidbody2D _rb2d {get; private set;}
     private Vector2 _velocity;
     private float _currentSpeed;
-    private bool _canShoot = true;
-    private bool _onCoolDown;
     private bool _break;
 
     private void OnEnable()
@@ -45,8 +39,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        InitializeReferences();
+    }
+
+    private void InitializeReferences(){
         _rb2d = GetComponent<Rigidbody2D>();
         _motor = GetComponent<ShipMotor>();
+        _shootSys = GetComponent<ShipShootingSystem>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,9 +53,6 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.ConfigureSMachine(this);
         stateMachine.Initialize();
-
-        bulletsPool = new ObjectPool(bulletPrefab);
-        bulletsPool.Init(40);
     }
 
     // Update is called once per frame
@@ -119,24 +115,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandleShoot()
     {
-        if (_canShoot) bulletsPool.Spawn<BulletController>(transform.position);
-
-        // Instantiate(
-        //     bulletPrefab,
-        //     transform.position + (Vector3)shootOrigin,
-        //     Quaternion.identity
-        // );
-
-        if (!_onCoolDown) StartCoroutine(ShootCoolDown());
-    }
-
-    private IEnumerator ShootCoolDown()
-    {
-        _canShoot = false;
-        _onCoolDown = true;
-        yield return new WaitForSeconds(shootCoolDown);
-        _canShoot = true;
-        _onCoolDown = false;
+        _shootSys.Shoot(transform.position, transform.up);
     }
 
     public void HandlePauseGame()
