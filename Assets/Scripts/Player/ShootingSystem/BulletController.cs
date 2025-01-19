@@ -26,6 +26,14 @@ public class BulletController : RecyclableObject
         if(_enabled) Move(direction);
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        IDamagable damagable = other.GetComponent<IDamagable>();
+        if(damagable != null){
+            damagable.TakeDamage();
+            Recycle();
+        }
+    }
+
     private void Move(Vector2 direction){
         _rb2d.linearVelocity = direction.normalized * bulletSpeed;
     }

@@ -2,14 +2,14 @@ using UnityEngine;
 
 public abstract class RecyclableObject : MonoBehaviour
 {
-    private ObjectPool _objectPool;
+    public ObjectPool objectPool {get; private set;}
 
     public void Configure(ObjectPool objectPool){
-        _objectPool = objectPool;
+        this.objectPool = objectPool;
     }
 
     public void Recycle(){
-        _objectPool.RecycleGameObject(this);
+        objectPool.RecycleGameObject(this);
     }
 
     internal abstract void Init(Vector2 position);
