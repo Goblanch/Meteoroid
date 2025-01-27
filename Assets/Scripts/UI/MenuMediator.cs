@@ -5,11 +5,17 @@ public class MenuMediator : MonoBehaviour {
     [SerializeField] private MainMenu _mainMenu;
     [SerializeField] private SettingsMenu _settingsMenu;
 
+    private AudioManager audioManager;
+
     private void Awake() {
         _mainMenu.Configure(this);
         _settingsMenu.Configure(this);
 
         _settingsMenu.Hide();
+    }
+
+    private void Start() {
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
     }
 
     public void BackToMainMenu(){
@@ -26,5 +32,7 @@ public class MenuMediator : MonoBehaviour {
         _settingsMenu.Show();
     }
 
-
+    public void UpdateMusicVolume(float newVolume){
+        audioManager.audioConfiguration.ChangeMusicVolume(newVolume);
+    }
 }

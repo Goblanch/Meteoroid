@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     [field: SerializeField, BoxGroup("Buttons")] private Button _backButton;
+    [field: SerializeField, BoxGroup("Buttons")] private Slider _musicSlider;
     [field: SerializeField, BoxGroup("Canvas Group")] private CanvasGroup _canvasGroup;
     [field: SerializeField, BoxGroup("Transition")] private float fadeTime = 0.5f;
 
@@ -17,6 +18,7 @@ public class SettingsMenu : MonoBehaviour
 
     private void Awake() {
         _backButton.onClick.AddListener(() => _mediator.BackToMainMenu());
+        _musicSlider.onValueChanged.AddListener((value) => _mediator.UpdateMusicVolume(_musicSlider.value));
     }
 
     public void Show(){

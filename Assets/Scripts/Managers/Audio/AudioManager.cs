@@ -5,6 +5,23 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
+    public AudioConfiguration audioConfiguration;
+
+    private void OnEnable() {
+        audioConfiguration.OnAudioChange += SetAudioConfiguration;
+    }
+
+    private void OnDisable() {
+        audioConfiguration.OnAudioChange -= SetAudioConfiguration;
+    }
+
+    private void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start() {
+        InitializeAudios();
+    }
 
     private void InitializeAudios()
     {
@@ -15,6 +32,11 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.loop = s.loop;
         }
+    }
+
+    private void SetAudioConfiguration(){
+        ChangeVolumeByType(SoundTypes.Music, audioConfiguration.musicVolume);
+        ChangeVolumeByType(SoundTypes.FX, audioConfiguration.fxVolume);
     }
 
     public void PlaySound(string soundName)
@@ -63,7 +85,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound s in sounds)
         {
-            if (s.tag == type) s.volume = Mathf.Clamp01(volume);
+            if (s.tag == type) s.source.volume = volume;
         }
     }
 

@@ -59,6 +59,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         stateMachine.Step();
+        if(Input.GetKeyDown(KeyCode.M)){
+            ServiceLocator.Instance.GetService<AudioManager>().PlaySound("MainMenu");
+        }
     }
 
     private void FixedUpdate()

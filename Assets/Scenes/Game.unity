@@ -918,7 +918,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add2e12b65ae1924493b645c1651adac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: MainMenu
+    tag: 0
+    clip: {fileID: 8300000, guid: 52c21781d0385c34393f4bef10789b20, type: 3}
+    volume: 1
+    loop: 1
+    source: {fileID: 0}
+  audioConfiguration: {fileID: 11400000, guid: 0484d61f5f4b5554c8bd8533ca9a787d, type: 2}
 --- !u!1 &1287821838
 GameObject:
   m_ObjectHideFlags: 0

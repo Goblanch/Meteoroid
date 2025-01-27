@@ -25,6 +25,8 @@ public class ShipMotor : MonoBehaviour
     private float _rotationAngle;
     private float _totalAcceleration;
     private float _velocityForward;
+    private AudioManager audioManager;
+    private bool _engineSoundEnabled = false;
 
     #region SETTERS
 
@@ -50,6 +52,12 @@ public class ShipMotor : MonoBehaviour
     private void Start() {
         _currentMaxSpeed = maxSpeed;
         _currentMaxSpeedBackUp = _currentMaxSpeed;
+
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+    }
+
+    private void Update() {
+        EngineSound();
     }
 
     private void FixedUpdate() {
@@ -94,6 +102,18 @@ public class ShipMotor : MonoBehaviour
     public void SetTurboMode(bool enabled){
         if(enabled) maxSpeed = _currentMaxSpeed * turboMultiplier;
         if(!enabled) maxSpeed = _currentMaxSpeedBackUp;
+    }
+
+    private void EngineSound(){
+        if(!_engineSoundEnabled && _totalAcceleration != 0){
+            audioManager.PlaySound("RocketEngine");
+            _engineSoundEnabled = true;
+        }
+
+        if(_engineSoundEnabled && _totalAcceleration == 0){
+            audioManager.StopSound("RocketEngine");
+            _engineSoundEnabled = false;
+        }
     }
    
 }
