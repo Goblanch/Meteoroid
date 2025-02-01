@@ -52,6 +52,7 @@ MonoBehaviour:
   timeOutOfBoundsBeforeDestroy: 2
   speedRange: {x: 2, y: 4}
   direction: {x: -1, y: 1}
+  pointsValue: 2
   asteroidsConfiguration: {fileID: 11400000, guid: 8e247da828bdbe942b09cb805aad11af, type: 2}
   dirRefParent: {fileID: 3344955892683305734}
   dirReferences:

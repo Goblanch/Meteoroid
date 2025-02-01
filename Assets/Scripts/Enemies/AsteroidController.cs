@@ -9,6 +9,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
     [SerializeField, BoxGroup("Asteroid Settings")] private float timeOutOfBoundsBeforeDestroy = 2f;
     [BoxGroup("Asteroid Settings")] public Vector2 speedRange;
     [BoxGroup("Asteroid Settings")] public Vector2 direction = Vector2.down;
+    [SerializeField, BoxGroup("Asteroid Settings")] private int pointsValue = 1;
     [BoxGroup("References")] public AsteroidsConfiguration asteroidsConfiguration;
     [BoxGroup("References")] public Transform dirRefParent;
     [BoxGroup("References")] public Transform[] dirReferences;
@@ -69,6 +70,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
         Debug.Log("ASTEROID HIT");
         SplitAsteroid();
         Destroy(gameObject);
+        ServiceLocator.Instance.GetService<GameManager>().AddPoint(pointsValue);
     }
 
     private void SplitAsteroid(){
