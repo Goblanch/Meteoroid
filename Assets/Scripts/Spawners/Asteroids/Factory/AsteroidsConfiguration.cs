@@ -7,6 +7,7 @@ public class AsteroidsConfiguration : ScriptableObject
 {
     [SerializeField] private AsteroidController[] asteroids;
     private Dictionary<string, AsteroidController> idToAsteroid;
+    public string[] asteroidTypes;
 
     private void OnEnable() {
         idToAsteroid = new Dictionary<string, AsteroidController>(asteroids.Length);

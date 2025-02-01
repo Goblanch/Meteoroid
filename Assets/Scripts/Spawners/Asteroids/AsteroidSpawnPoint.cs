@@ -7,7 +7,11 @@ public class AsteroidSpawnPoint : MonoBehaviour {
     
     [BoxGroup("Spawn Settings")] public Vector2 direction = Vector2.right;
     [BoxGroup("Spawn Settings"), Range(0f, 180f)] public float angleRange = 25f;
+    [BoxGroup("Spawn Settings"), Range(0f, 180f)] public float cooldownTime = 3f;
     [field: SerializeField, BoxGroup("Visual Settings")] private float gizmoLineLength = 2f;
+    
+    private bool _active = true;
+    [HideInInspector] public bool IsActive {get => _active;}
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
@@ -30,5 +34,11 @@ public class AsteroidSpawnPoint : MonoBehaviour {
 
         Quaternion rotation = Quaternion.Euler(0, 0, randomAngle);
         return rotation * direction.normalized;
+    }
+
+    public IEnumerator CoolDownTimer(){
+        _active = false;
+        yield return new WaitForSeconds(cooldownTime);
+        _active = true;
     }
 }

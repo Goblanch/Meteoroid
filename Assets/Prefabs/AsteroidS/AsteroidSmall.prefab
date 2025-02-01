@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4257983599803521161}
   - component: {fileID: 8286687089773560928}
   m_Layer: 0
-  m_Name: AsteroidNormal
+  m_Name: AsteroidSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4.02, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5459533984677168103}
   - {fileID: 3344955892683305734}
@@ -48,9 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2100a51e5f83147877f5e036c615ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: normal
+  _id: small
+  timeOutOfBoundsBeforeDestroy: 2
   speedRange: {x: 2, y: 4}
   direction: {x: -1, y: 1}
+  asteroidsConfiguration: {fileID: 11400000, guid: 8e247da828bdbe942b09cb805aad11af, type: 2}
   dirRefParent: {fileID: 3344955892683305734}
   dirReferences:
   - {fileID: 1118392403132851650}

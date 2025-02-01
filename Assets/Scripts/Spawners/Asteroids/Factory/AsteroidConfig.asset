@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: AsteroidConfig
   m_EditorClassIdentifier: 
   asteroids:
+  - {fileID: 3403921037704904969, guid: 39f9ed2c8883ca54687191b5ad3f5db1, type: 3}
   - {fileID: 3403921037704904969, guid: 1e3e3980e05e64d43b362b56033f1836, type: 3}
+  - {fileID: 3403921037704904969, guid: 1da3a19ecf9fbaf429020dcc36f1352e, type: 3}
+  asteroidTypes:
+  - big
+  - normal
+  - small
