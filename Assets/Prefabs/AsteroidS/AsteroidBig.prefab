@@ -52,6 +52,7 @@ MonoBehaviour:
   timeOutOfBoundsBeforeDestroy: 2
   speedRange: {x: 2, y: 4}
   direction: {x: -1, y: 1}
+  pointsValue: 1
   asteroidsConfiguration: {fileID: 11400000, guid: 8e247da828bdbe942b09cb805aad11af, type: 2}
   dirRefParent: {fileID: 3344955892683305734}
   dirReferences:
@@ -196,7 +197,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47d4d8495537dc0409f4657ab25df4c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -69,8 +69,8 @@ public class AsteroidController : MonoBehaviour, IDamagable
     {
         Debug.Log("ASTEROID HIT");
         SplitAsteroid();
-        Destroy(gameObject);
         ServiceLocator.Instance.GetService<GameManager>().AddPoint(pointsValue);
+        Destroy(gameObject);
     }
 
     private void SplitAsteroid(){

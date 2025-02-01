@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private float _currentSpeed;
     private bool _break;
 
+    private Animator _animator;
+
     private void OnEnable()
     {
         SubscribeToInput();
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         _rb2d = GetComponent<Rigidbody2D>();
         _motor = GetComponent<ShipMotor>();
         _shootSys = GetComponent<ShipShootingSystem>();
+        _animator = GetComponent<Animator>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -98,6 +101,13 @@ public class PlayerController : MonoBehaviour
     {
         _input = input;
         _motor.SetInput(_input.y, 0, _input.x);
+
+        if(input.y == 0){
+            _animator.SetBool("moving", false);
+            return;
+        }
+
+        _animator.SetBool("moving", true);
     }
 
     public void HandleSprint(bool sprint)
