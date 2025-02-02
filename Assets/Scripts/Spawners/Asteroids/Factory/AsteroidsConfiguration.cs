@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AsteroidsConfiguration", menuName = "Meteoroid/Factory Configurations/AsteroidsConfiguration")]
+[CreateAssetMenu(fileName = "AsteroidsConfiguration", menuName = "Meteoroid!/Factory Configurations/AsteroidsConfiguration")]
 public class AsteroidsConfiguration : ScriptableObject
 {
     [SerializeField] private AsteroidController[] asteroids;

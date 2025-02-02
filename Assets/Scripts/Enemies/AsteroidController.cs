@@ -11,6 +11,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
     [BoxGroup("Asteroid Settings")] public Vector2 direction = Vector2.down;
     [SerializeField, BoxGroup("Asteroid Settings")] private int pointsValue = 1;
     [BoxGroup("References")] public AsteroidsConfiguration asteroidsConfiguration;
+    [BoxGroup("References")] public ParticlesConfiguration particlesConfiguration;
     [BoxGroup("References")] public Transform dirRefParent;
     [BoxGroup("References")] public Transform[] dirReferences;
 
@@ -19,6 +20,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
     private float _speed;
     private float _outOfBoundsTimer = 0f;
     private AsteroidFactory _asteroidFactory;
+    private ParticlesFactory _particlesFactory;
 
     private void OnDrawGizmos()
     {
@@ -38,6 +40,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
     {
         _speed = Random.Range(speedRange.x, speedRange.y);
         _asteroidFactory = new AsteroidFactory(asteroidsConfiguration);
+        _particlesFactory = new ParticlesFactory(particlesConfiguration);
     }
 
     // Update is called once per frame
@@ -67,7 +70,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
 
     public void TakeDamage()
     {
-        Debug.Log("ASTEROID HIT");
+        SpawnParticlesByAsteroidId();
         SplitAsteroid();
         ServiceLocator.Instance.GetService<GameManager>().AddPoint(pointsValue);
         Destroy(gameObject);
@@ -91,6 +94,31 @@ public class AsteroidController : MonoBehaviour, IDamagable
             AsteroidController newAsteroid = _asteroidFactory.Create(id);
             newAsteroid.transform.position = transform.position;
             newAsteroid.Initialize(direction);
+        }
+    }
+
+    private void SpawnParticlesByAsteroidId(){
+        Particles explosion = _particlesFactory.Create("explosion");
+        explosion.transform.position = transform.position;
+
+        Particles points;
+
+        switch(_id){
+            case "big":
+                points = _particlesFactory.Create("plustwenty");
+                points.transform.position = transform.position;
+                break;
+            case "normal":
+                points = _particlesFactory.Create("plusten");
+                points.transform.position = transform.position;
+                break;
+            case "small":
+                points = _particlesFactory.Create("plusfive");
+                points.transform.position = transform.position;
+                break;
+            default:
+                Debug.LogError($"Unable to find {_id} asteroid");
+                break;
         }
     }
 

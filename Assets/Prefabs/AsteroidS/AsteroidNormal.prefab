@@ -54,6 +54,7 @@ MonoBehaviour:
   direction: {x: -1, y: 1}
   pointsValue: 2
   asteroidsConfiguration: {fileID: 11400000, guid: 8e247da828bdbe942b09cb805aad11af, type: 2}
+  particlesConfiguration: {fileID: 11400000, guid: 4a93eceea45834841a329766a1d95817, type: 2}
   dirRefParent: {fileID: 3344955892683305734}
   dirReferences:
   - {fileID: 1118392403132851650}
