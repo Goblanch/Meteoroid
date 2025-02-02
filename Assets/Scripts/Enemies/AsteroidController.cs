@@ -53,7 +53,6 @@ public class AsteroidController : MonoBehaviour, IDamagable
 
     public void Initialize(Vector2 direction)
     {
-
         this.direction = direction;
     }
 
@@ -105,7 +104,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
 
         switch(_id){
             case "big":
-                points = _particlesFactory.Create("plustwenty");
+                points = _particlesFactory.Create("plusfive");
                 points.transform.position = transform.position;
                 break;
             case "normal":
@@ -113,7 +112,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
                 points.transform.position = transform.position;
                 break;
             case "small":
-                points = _particlesFactory.Create("plusfive");
+                points = _particlesFactory.Create("plustwenty");
                 points.transform.position = transform.position;
                 break;
             default:

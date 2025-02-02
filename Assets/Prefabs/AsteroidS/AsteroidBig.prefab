@@ -52,7 +52,7 @@ MonoBehaviour:
   timeOutOfBoundsBeforeDestroy: 2
   speedRange: {x: 2, y: 4}
   direction: {x: -1, y: 1}
-  pointsValue: 1
+  pointsValue: 5
   asteroidsConfiguration: {fileID: 11400000, guid: 8e247da828bdbe942b09cb805aad11af, type: 2}
   particlesConfiguration: {fileID: 11400000, guid: 4a93eceea45834841a329766a1d95817, type: 2}
   dirRefParent: {fileID: 3344955892683305734}
@@ -94,7 +94,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.647563
 --- !u!50 &8286687089773560928
 Rigidbody2D:
   serializedVersion: 5

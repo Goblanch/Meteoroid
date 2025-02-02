@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7277538518315579892}
   - component: {fileID: 3403921037704904969}
-  - component: {fileID: 4257983599803521161}
   - component: {fileID: 8286687089773560928}
+  - component: {fileID: 5154465947271804117}
   m_Layer: 0
   m_Name: AsteroidNormal
   m_TagString: Untagged
@@ -52,15 +52,42 @@ MonoBehaviour:
   timeOutOfBoundsBeforeDestroy: 2
   speedRange: {x: 2, y: 4}
   direction: {x: -1, y: 1}
-  pointsValue: 2
+  pointsValue: 10
   asteroidsConfiguration: {fileID: 11400000, guid: 8e247da828bdbe942b09cb805aad11af, type: 2}
   particlesConfiguration: {fileID: 11400000, guid: 4a93eceea45834841a329766a1d95817, type: 2}
   dirRefParent: {fileID: 3344955892683305734}
   dirReferences:
   - {fileID: 1118392403132851650}
   - {fileID: 8212566242057083444}
---- !u!58 &4257983599803521161
-CircleCollider2D:
+--- !u!50 &8286687089773560928
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358209011420969072}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &5154465947271804117
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -93,35 +120,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
---- !u!50 &8286687089773560928
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 358209011420969072}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Offset: {x: 0.0075075687, y: 0.042533163}
+  m_Size: {x: 1.8156528, y: 1.1951731}
+  m_Direction: 1
 --- !u!1 &1192336928960442638
 GameObject:
   m_ObjectHideFlags: 0
