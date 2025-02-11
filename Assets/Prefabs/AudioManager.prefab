@@ -69,4 +69,10 @@ MonoBehaviour:
     volume: 1
     loop: 0
     source: {fileID: 0}
+  - name: GameOver
+    tag: 1
+    clip: {fileID: 8300000, guid: 8aa2af73ff1bb0a42a4bfe47c3de0a16, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
   audioConfiguration: {fileID: 11400000, guid: 0484d61f5f4b5554c8bd8533ca9a787d, type: 2}

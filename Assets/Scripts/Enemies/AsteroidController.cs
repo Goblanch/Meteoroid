@@ -1,3 +1,4 @@
+using System.Data.Common;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -41,6 +42,12 @@ public class AsteroidController : MonoBehaviour, IDamagable
         _speed = Random.Range(speedRange.x, speedRange.y);
         _asteroidFactory = new AsteroidFactory(asteroidsConfiguration);
         _particlesFactory = new ParticlesFactory(particlesConfiguration);
+
+        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath += () => _speed = 0;
+    }
+
+    private void OnDisable() {
+        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath -= () => _speed = 0;
     }
 
     // Update is called once per frame
@@ -49,6 +56,12 @@ public class AsteroidController : MonoBehaviour, IDamagable
         Move();
         LookAtVelocityDirection();
         CheckOutOfBounds();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("Player")){
+            ServiceLocator.Instance.GetService<GameManager>().PlayerHit();
+        }
     }
 
     public void Initialize(Vector2 direction)

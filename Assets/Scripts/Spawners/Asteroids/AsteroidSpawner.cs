@@ -12,12 +12,20 @@ public class AsteroidSpawner : MonoBehaviour
 
     private AsteroidFactory asteroidFactory;
     private bool _canSpawn = true;
+    private bool _spawnerEnabled = true;
+
     private void Start() {
         asteroidFactory = new AsteroidFactory(asteroidsConfiguration);
+        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath += () => _spawnerEnabled = false;
     }
 
     private void Update() {
+        if(!_spawnerEnabled) return;
         SpawnAsteroid();
+    }
+
+    private void OnDisable() {
+        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath -= () => _spawnerEnabled = false;
     }
 
     private void OnDrawGizmos() {

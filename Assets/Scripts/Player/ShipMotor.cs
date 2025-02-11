@@ -115,5 +115,13 @@ public class ShipMotor : MonoBehaviour
             _engineSoundEnabled = false;
         }
     }
+
+    public void ResetMotor(){
+        _rb2d.linearVelocity = Vector2.zero;
+        _totalAcceleration = 0;
+        _accelerationInput = 0;
+        _steeringInput = 0;
+        _engineSoundEnabled = false;
+    }
    
 }

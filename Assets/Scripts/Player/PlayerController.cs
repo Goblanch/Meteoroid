@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private bool _break;
 
     private Animator _animator;
+    private GameManager _gManager;
 
     private void OnEnable()
     {
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribeInput();
+        ServiceLocator.Instance.GetService<GameManager>().OnGameReset -= ResetPlayer;
+        _gManager.OnPlayerDeath -= PlayerDeath;
     }
 
     private void Awake()
@@ -56,6 +59,11 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.ConfigureSMachine(this);
         stateMachine.Initialize();
+
+        _gManager = ServiceLocator.Instance.GetService<GameManager>();
+
+        _gManager.OnGameReset += ResetPlayer;
+        _gManager.OnPlayerDeath += PlayerDeath;
     }
 
     // Update is called once per frame
@@ -139,5 +147,16 @@ public class PlayerController : MonoBehaviour
     public void HandleResumeGame()
     {
 
+    }
+
+    public void ResetPlayer(){
+        transform.position = Vector3.zero;
+        _motor.ResetMotor();
+        input.ChangeGameMode(InputListener.GameModes.Game);
+    }
+
+    public void PlayerDeath(){
+        _motor.ResetMotor();
+        input.ChangeGameMode(InputListener.GameModes.UI);
     }
 }
