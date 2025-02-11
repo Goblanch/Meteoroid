@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribeInput();
-        ServiceLocator.Instance.GetService<GameManager>().OnGameReset -= ResetPlayer;
+        _gManager.OnGameReset -= ResetPlayer;
         _gManager.OnPlayerDeath -= PlayerDeath;
     }
 
@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetPlayer(){
         transform.position = Vector3.zero;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         _motor.ResetMotor();
         input.ChangeGameMode(InputListener.GameModes.Game);
     }

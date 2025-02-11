@@ -13,37 +13,49 @@ public class AsteroidSpawner : MonoBehaviour
     private AsteroidFactory asteroidFactory;
     private bool _canSpawn = true;
     private bool _spawnerEnabled = true;
+    private GameManager _gManager;
 
-    private void Start() {
+    private void Start()
+    {
         asteroidFactory = new AsteroidFactory(asteroidsConfiguration);
-        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath += () => _spawnerEnabled = false;
+
+        _gManager = ServiceLocator.Instance.GetService<GameManager>();
+        _gManager.OnPlayerDeath += HandlePlayerDeath;
+        _gManager.OnGameReset += HandleGameReset;
     }
 
-    private void Update() {
-        if(!_spawnerEnabled) return;
+    private void Update()
+    {
+        if (!_spawnerEnabled) return;
         SpawnAsteroid();
     }
 
-    private void OnDisable() {
-        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath -= () => _spawnerEnabled = false;
+    private void OnDisable()
+    {
+        _gManager.OnPlayerDeath -= HandlePlayerDeath;
+        _gManager.OnGameReset -= HandleGameReset;
+
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.green;
 
-        foreach(AsteroidSpawnPoint spawnPoint in spawnLocations){
-            if(spawnPoint != null) Gizmos.DrawWireSphere(spawnPoint.transform.position, spawnCirclesRadius);
+        foreach (AsteroidSpawnPoint spawnPoint in spawnLocations)
+        {
+            if (spawnPoint != null) Gizmos.DrawWireSphere(spawnPoint.transform.position, spawnCirclesRadius);
         }
     }
 
-    public void SpawnAsteroid(){
-        if(!_canSpawn) return;
+    public void SpawnAsteroid()
+    {
+        if (!_canSpawn) return;
 
         string id = asteroidsConfiguration.asteroidTypes[Random.Range(0, asteroidsConfiguration.asteroidTypes.Length)];
 
         AsteroidSpawnPoint spawnPoint = GetRandomSpawnPoint();
         Vector2 direction = spawnPoint.GetRandomSpawnDirection();
-        
+
         AsteroidController asteroid = asteroidFactory.Create(id);
         asteroid.transform.position = spawnPoint.transform.position;
         asteroid.Initialize(direction);
@@ -51,13 +63,16 @@ public class AsteroidSpawner : MonoBehaviour
         StartCoroutine(SpawnCoolDown());
     }
 
-    private AsteroidSpawnPoint GetRandomSpawnPoint(){
+    private AsteroidSpawnPoint GetRandomSpawnPoint()
+    {
 
         AsteroidSpawnPoint point = null;
 
-        while(!point){
+        while (!point)
+        {
             point = spawnLocations[Random.Range(0, spawnLocations.Length)];
-            if(!point.IsActive){
+            if (!point.IsActive)
+            {
                 point = null;
             }
         }
@@ -65,9 +80,18 @@ public class AsteroidSpawner : MonoBehaviour
         return spawnLocations[Random.Range(0, spawnLocations.Length)];
     }
 
-    private IEnumerator SpawnCoolDown(){
+    private IEnumerator SpawnCoolDown()
+    {
         _canSpawn = false;
         yield return new WaitForSeconds(spawnCoolDown);
         _canSpawn = true;
+    }
+
+    private void HandlePlayerDeath(){
+        _spawnerEnabled = false;
+    }
+
+    private void HandleGameReset(){
+        _spawnerEnabled = true;
     }
 }

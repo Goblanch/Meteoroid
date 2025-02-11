@@ -22,6 +22,7 @@ public class AsteroidController : MonoBehaviour, IDamagable
     private float _outOfBoundsTimer = 0f;
     private AsteroidFactory _asteroidFactory;
     private ParticlesFactory _particlesFactory;
+    private GameManager _gManager;
 
     private void OnDrawGizmos()
     {
@@ -43,11 +44,14 @@ public class AsteroidController : MonoBehaviour, IDamagable
         _asteroidFactory = new AsteroidFactory(asteroidsConfiguration);
         _particlesFactory = new ParticlesFactory(particlesConfiguration);
 
-        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath += () => _speed = 0;
+        _gManager = ServiceLocator.Instance.GetService<GameManager>();
+        _gManager.OnPlayerDeath += HandlePlayerDeath;
+        _gManager.OnGameReset += HandleGameReset;
     }
 
     private void OnDisable() {
-        ServiceLocator.Instance.GetService<GameManager>().OnPlayerDeath -= () => _speed = 0;
+        _gManager.OnPlayerDeath -= HandlePlayerDeath;
+        _gManager.OnGameReset -= HandleGameReset;
     }
 
     // Update is called once per frame
@@ -150,5 +154,13 @@ public class AsteroidController : MonoBehaviour, IDamagable
         }else{
             _outOfBoundsTimer = 0;
         }
+    }
+
+    private void HandlePlayerDeath(){
+        _speed = 0;
+    }
+
+    private void HandleGameReset(){
+        Destroy(gameObject);
     }
 }

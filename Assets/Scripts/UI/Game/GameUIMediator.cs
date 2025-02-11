@@ -41,6 +41,7 @@ public class GameUIMediator : MonoBehaviour
 
     public void ResetUI(){
         _gameOver.Hide();
+        _pointsText.gameObject.SetActive(true);
         _pointsText.text = "0";
     }
 

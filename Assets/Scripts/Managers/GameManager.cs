@@ -12,12 +12,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        OnGameReset += () => playerPoints = 0;
+        OnGameReset += HandleGameReset;
     }
 
     private void OnDisable()
     {
-        OnGameReset -= () => playerPoints = 0;
+        OnGameReset -= HandleGameReset;
     }
 
     public void AddPoint(int pointsToAdd)
@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
         audio.StopSoundsByType(SoundTypes.Music);
         audio.StopSoundsByType(SoundTypes.FX);
         audio.PlaySound("GameOver");
+    }
+
+    private void HandleGameReset(){
+        playerPoints = 0;
+        ServiceLocator.Instance.GetService<AudioManager>().PlaySound("Game");
     }
 
 }
