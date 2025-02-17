@@ -75,6 +75,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        IConsumible consumible = collision.GetComponent<IConsumible>();
+
+        if(consumible != null){
+            consumible.ApplyEffect();
+        }
+    }
+
     private void FixedUpdate()
     {
         stateMachine.PhysicsStep();
