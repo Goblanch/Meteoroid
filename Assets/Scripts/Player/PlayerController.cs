@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         IConsumible consumible = collision.GetComponent<IConsumible>();
 
         if(consumible != null){
-            consumible.ApplyEffect();
+            consumible.ApplyEffect(this);
         }
     }
 

@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IConsumible
 {
-    public void ApplyEffect();
+    public void ApplyEffect(PlayerController player);
 }
