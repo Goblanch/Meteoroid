@@ -86,8 +86,6 @@ public class ShipMotor : MonoBehaviour
         float deltaRotation = _steeringInput * turnFactor;
         _rotationAngle += deltaRotation;
 
-        Debug.Log(transform.right);
-
         _rb2d.rotation = _rotationAngle;
     }
 
