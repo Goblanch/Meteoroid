@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField, BoxGroup("State Machine Reference")] private PlayerStateMachine stateMachine;
 
     private ShipShootingSystem _shootSys;
+    public ShipShootingSystem ShootSys {get => _shootSys;}
 
     private ShipMotor _motor;
     public ShipMotor Motor {get => _motor;}
